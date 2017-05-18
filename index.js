@@ -41,6 +41,7 @@ const createServer = function createServer(interface, includeInRoutingTable) {
     if(localAddresses.includes(remote.address)) {
       return;
     }
+    let vector = new Map(JSON.parse(message));
     console.info(`Message arrived from ${remote.address}:${remote.port}`);
     console.info(message.toString());
   });
