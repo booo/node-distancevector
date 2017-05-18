@@ -14,14 +14,22 @@ let servers = new Map();
 // TODO does the port help in anyway?
 let routingTable = new Map();
 
-const createServer = function createServer() {
+const createServer = function createServer(interface, includeInRoutingTable) {
 
   let server = dgram.createSocket("udp6");
 
   server.on("listening", function(){
     let address = server.address()
     console.info(`Listening on ${address.address}:${address.port}`);
-    routingTable.set(`${address.address}:${address.port}`, { 'cost': 0 });
+    if(includeInRoutingTable) {
+      //routingTable.set(`${address.address}:${address.port}`, { 'cost': 0 });
+      let destination = {
+        'cost': 0,
+        'link': interface,
+        'time': null
+      };
+      routingTable.set(address.address, destination);
+    }
   });
   server.on("message", function(message, remote){
     //TODO filter message from us
