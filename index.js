@@ -108,14 +108,15 @@ INTERFACES.forEach(function(interface){
   //TODO there can be multiple addresses, which one should we use?
   let address = ip.address(interface, "ipv6");
   //TODO this is wrong!?!! address = ALL_NODES_ADDRESS;
-  let server = createServer();
+  let server = createServer(interface, true);
   console.info(`Binding server to ${address} on ${interface}`);
   //TODO check if we need the interface here
   server.bind(PORT, `${address}%${interface}`);
   servers.set(interface, server);
-  
+
   //TODO THINK!!!
   //bind to ALL_NODES_ADDRESS of interface
-  server = createServer();
+  server = createServer(interface);
   server.bind(PORT, `${ALL_NODES_ADDRESS}%${interface}`);
+  //TODO add server/socket to set of sockets
 });
