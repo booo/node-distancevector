@@ -7,6 +7,7 @@ const INTERFACES = (process.argv.slice(2).length > 0) ? process.argv.slice(2) : 
 const ALL_NODES_ADDRESS = "ff02::1" // this has link scope not node scope
 
 // map of sockets for each interface
+// TODO maybe make a difference between listening and sending sockets
 let servers = new Map();
 
 // key aka destination is combinationn of address (ip) and port
