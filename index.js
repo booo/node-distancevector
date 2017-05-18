@@ -89,6 +89,9 @@ const sendVectors = function sendVectors(){
 
   let vector = [];
 
+  console.info("Routing table:");
+  console.info(routingTable);
+
   routingTable.forEach(function(destination, destinationAddress){
     vector.push([destinationAddress, destination.cost]);
   });
