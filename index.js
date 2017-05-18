@@ -43,7 +43,34 @@ const createServer = function createServer(interface, includeInRoutingTable) {
     }
     let vector = new Map(JSON.parse(message));
     console.info(`Message arrived from ${remote.address}:${remote.port}`);
-    console.info(message.toString());
+    console.info(vector);
+
+    // TODO get link/interface and cost
+    let linkCost = 1;
+
+    vector.forEach(function(cost, destinationAddress){
+      if(!routingTable.has(destinationAddress)){
+        // new route
+        let destination = {
+          'cost': cost + linkCost,
+          'link': interface,
+          'time': null
+        };
+        routingTable.set(destinationAddress, destination);
+      } else {
+        //TODO do we need information about us? we do know how to route to us
+        if(localAddresses.includes(destinationAddress)) { return; }
+        let destination = routingTable.get(destinationAddress);
+        //TODO understand second part of condition and why it seems broken
+        //console.info(interface == destination.link);
+        if((cost + linkCost) < destination.cost || interface == destination.link) {
+        //if((cost + linkCost) < destination.cost) {
+          destination.cost = cost + linkCost;
+          destination.link = interface;
+          destination.time = null;
+        }
+      }
+    });
   });
   server.on("error", function(error) {
     console.error(error);
