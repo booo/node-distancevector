@@ -32,7 +32,15 @@ const createServer = function createServer(interface, includeInRoutingTable) {
     }
   });
   server.on("message", function(message, remote){
-    //TODO filter message from us
+    //do not handle messages from us
+    //TODO remove map?
+    let localAddresses = INTERFACES.map(function(interface){
+      return ip.address(interface, "ipv6");
+    });
+    //TODO maybe check port too?
+    if(localAddresses.includes(remote.address)) {
+      return;
+    }
     console.info(`Message arrived from ${remote.address}:${remote.port}`);
     console.info(message.toString());
   });
