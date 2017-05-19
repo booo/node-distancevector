@@ -59,8 +59,6 @@ const createServer = function createServer(interface, includeInRoutingTable) {
         };
         routingTable.set(destinationAddress, destination);
       } else {
-        //TODO do we need information about us? we do know how to route to us
-        if(localAddresses.includes(destinationAddress)) { return; }
         let destination = routingTable.get(destinationAddress);
         //TODO understand second part of condition and why it seems broken
         //console.info(interface == destination.link);
