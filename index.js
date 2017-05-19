@@ -30,7 +30,7 @@ const createServer = function createServer(interface, includeInRoutingTable) {
       //routingTable.set(`${address.address}:${address.port}`, { 'cost': 0 });
       let destination = {
         'cost': 0,
-        'link': interface,
+        'link': "lo",
         'time': null
       };
       routingTable.set(address.address, destination);
