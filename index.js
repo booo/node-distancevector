@@ -14,6 +14,11 @@ let servers = new Map();
 // TODO does the port help in anyway?
 let routingTable = new Map();
 
+//TODO remove map?
+let localAddresses = INTERFACES.map(function(interface){
+  return ip.address(interface, "ipv6");
+});
+
 const createServer = function createServer(interface, includeInRoutingTable) {
 
   let server = dgram.createSocket("udp6");
@@ -33,10 +38,6 @@ const createServer = function createServer(interface, includeInRoutingTable) {
   });
   server.on("message", function(message, remote){
     //do not handle messages from us
-    //TODO remove map?
-    let localAddresses = INTERFACES.map(function(interface){
-      return ip.address(interface, "ipv6");
-    });
     //TODO maybe check port too?
     if(localAddresses.includes(remote.address)) {
       return;
