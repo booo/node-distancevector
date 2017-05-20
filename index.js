@@ -4,7 +4,7 @@ const ip = require("ip");
 const PORT = 1337;
 //TODO improve argument parsing
 const INTERFACES = (process.argv.slice(2).length > 0) ? process.argv.slice(2) : ["wlp3s0"];
-const ALL_NODES_ADDRESS = "ff02::1" // this has link scope not node scope
+const ALL_NODES_ADDRESS = "ff02::1"; // this has link scope not node scope
 
 // map of sockets for each interface
 // TODO maybe make a difference between listening and sending sockets
@@ -24,7 +24,7 @@ const createServer = function createServer(interface, includeInRoutingTable) {
   let server = dgram.createSocket("udp6");
 
   server.on("listening", function(){
-    let address = server.address()
+    let address = server.address();
     console.info(`Listening on ${address.address}:${address.port}`);
     if(includeInRoutingTable) {
       //routingTable.set(`${address.address}:${address.port}`, { 'cost': 0 });
@@ -73,7 +73,7 @@ const createServer = function createServer(interface, includeInRoutingTable) {
   });
   server.on("error", function(error) {
     console.error(error);
-  })
+  });
 
   return server;
 };
