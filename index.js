@@ -60,10 +60,7 @@ const createServer = function createServer(interface, includeInRoutingTable) {
         routingTable.set(destinationAddress, destination);
       } else {
         let destination = routingTable.get(destinationAddress);
-        //TODO understand second part of condition and why it seems broken
-        //console.info(interface == destination.link);
         if((cost + linkCost) < destination.cost || interface == destination.link) {
-        //if((cost + linkCost) < destination.cost) {
           destination.cost = cost + linkCost;
           destination.link = interface;
           destination.time = null;
